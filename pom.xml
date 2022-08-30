@@ -10,25 +10,25 @@
         Java implementation of expo-server-sdk implementation.
         Classes and methods to manage push notifications
     </description>
-    <url>https://github.com/jav/expo-server-sdk-java</url>
+    <url>https://github.com/nia-medtech/expo-server-sdk-java</url>
     <licenses>
         <license>
             <name>The MIT License</name>
-            <url>https://raw.githubusercontent.com/jav/expo-server-sdk-java/master/LICENCE.txt</url>
+            <url>https://raw.githubusercontent.com/nia-medtech/expo-server-sdk-java/edit/main/LICENCE.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
     <developers>
         <developer>
-            <id>jav</id>
-            <name>Javier Ubillos</name>
-            <email>javier@ubillos.org</email>
+            <id>oliverwelter</id>
+            <name>Oliver Welter</name>
+            <email>oliver.welter@nia-medtech.com</email>
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git://github.com/jav/expo-server-sdk-java.git</connection>
-        <developerConnection>scm:git:git@github.com:jav/expo-server-sdk-java.git</developerConnection>
-        <url>https://github.com/jav/expo-server-sdk-java</url>
+        <connection>scm:git:git@github.com:nia-medtech/expo-server-sdk-java.git</connection>
+        <developerConnection>scm:git:git@github.com:nia-medtech/expo-server-sdk-java.git</developerConnection>
+        <url>https://github.com/nia-medtech/expo-server-sdk-java</url>
         <tag>HEAD</tag>
     </scm>
     <build>

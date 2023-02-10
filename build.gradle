@@ -1,6 +1,7 @@
 plugins {
   id 'java-library'
   id 'maven-publish'
+  id 'signing'
 }
 
 ext {
@@ -30,6 +31,24 @@ test {
   useJUnitPlatform()
 }
 
+task javadocJar(type: Jar) {
+  classifier = 'javadoc'
+  from javadoc
+}
+
+task sourcesJar(type: Jar) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+artifacts {
+  archives javadocJar, sourcesJar
+}
+
+signing {
+  sign configurations.archives
+}
+
 publishing {
   repositories {
     maven {
@@ -38,6 +57,35 @@ publishing {
       credentials {
         username = System.getenv("MAVEN_USERNAME")
         password = System.getenv("MAVEN_PASSWORD")
+      }
+    }
+  }
+  
+  publications {
+    mavenJava(MavenPublication) {
+      pom {
+        name = 'expo-server-sdk'
+        description = 'Java implementation of expo-server-sdk implementation.Classes and methods to manage push notifications'
+        url = 'https://github.com/nia-medtech/expo-server-sdk-java'
+ 
+        licenses {
+            license {
+                name = 'The MIT License'
+                url = 'https://raw.githubusercontent.com/nia-medtech/expo-server-sdk-java/edit/main/LICENCE.txt'
+            }
+        }
+        developers {
+            developer {
+                id = 'oliverwelter'
+                name = 'Oliver Welter'
+                email = 'oliver.welter@nia-medtech.com'
+            }
+        }
+        scm {
+            connection = 'scm:git:git@github.com:nia-medtech/expo-server-sdk-java.git'
+            developerConnection = 'scm:git:git@github.com:nia-medtech/expo-server-sdk-java.git'
+            url = 'scm:git:git@github.com:nia-medtech/expo-server-sdk-java.git'
+          }
       }
     }
   }

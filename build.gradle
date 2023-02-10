@@ -41,6 +41,7 @@ artifacts {
   archives javadocJar, sourcesJar
 }
 
+
 signing {
   required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
   def signingKey = findProperty("signingKey")

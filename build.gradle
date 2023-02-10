@@ -6,6 +6,7 @@ plugins {
 
 ext {
   commonsLangVersion = '3.12.0'
+  isReleaseVersion = !version.endsWith("SNAPSHOT")
   jacksonVersion = '2.13.4'
   junitVersion = '5.8.2'
 }
@@ -27,18 +28,13 @@ dependencies {
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
+java {
+  withJavadocJar()
+  withSourcesJar()
+}
+
 test {
   useJUnitPlatform()
-}
-
-task javadocJar(type: Jar) {
-  classifier = 'javadoc'
-  from javadoc
-}
-
-task sourcesJar(type: Jar) {
-  classifier = 'sources'
-  from sourceSets.main.allSource
 }
 
 artifacts {
@@ -46,6 +42,10 @@ artifacts {
 }
 
 signing {
+  required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+  def signingKey = findProperty("signingKey")
+  def signingPassword = findProperty("signingPassword")
+  useInMemoryPgpKeys(signingKey, signingPassword)
   sign configurations.archives
 }
 
@@ -53,7 +53,7 @@ publishing {
   repositories {
     maven {
       name = "OSSRH"
-      url = version.toString().endsWith('-SNAPSHOT') ? 'https://s01.oss.sonatype.org/content/repositories' : 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+      url = isReleaseVersion ? 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/' : 'https://s01.oss.sonatype.org/content/repositories'
       credentials {
         username = System.getenv("MAVEN_USERNAME")
         password = System.getenv("MAVEN_PASSWORD")

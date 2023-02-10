@@ -52,11 +52,20 @@ signing {
 publishing {
   repositories {
     maven {
-      name = "OSSRH"
-      url = isReleaseVersion ? 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/' : 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+      name = "ossrh"
+      url = isReleaseVersion ? project.ossrhReleaseRepoUrl : project.ossrhSnapshotRepoUrl
       credentials {
-        username = System.getenv("MAVEN_USERNAME")
-        password = System.getenv("MAVEN_PASSWORD")
+        username = project.ossrhUsername
+        password = project.ossrhPassword 
+      }
+    }
+    
+    maven {
+      name = "nexus"
+      url = isReleaseVersion ? project.nexusReleaseRepoUrl : project.nexusSnapshotRepoUrl
+      credentials {
+        username project.nexusUsername
+        password project.nexusPassword
       }
     }
   }

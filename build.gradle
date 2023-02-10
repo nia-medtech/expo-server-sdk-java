@@ -55,8 +55,8 @@ publishing {
       name = "ossrh"
       url = isReleaseVersion ? project.ossrhReleaseRepoUrl : project.ossrhSnapshotRepoUrl
       credentials {
-        username project.findProperty('ossrhUsername')
-        password project.findProperty('ossrhPassword')
+        username findProperty("ossrhUsername")
+        password findProperty("ossrhPassword")
       }
     }
     
@@ -64,8 +64,8 @@ publishing {
       name = "nexus"
       url = isReleaseVersion ? project.nexusReleaseRepoUrl : project.nexusSnapshotRepoUrl
       credentials {
-        username project.findProperty('nexusUsername')
-        password project.findProperty('nexusPassword')
+        username findProperty("nexusUsername")
+        password findProperty("nexusPassword")
       }
     }
   }

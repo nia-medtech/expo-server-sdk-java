@@ -1,5 +1,12 @@
 plugins {
   id 'java-library'
+  id 'maven-publish'
+}
+
+ext {
+  commonsLangVersion = '3.12.0'
+  jacksonVersion = '2.13.4'
+  junitVersion = '5.8.2'
 }
 
 group = 'com.niamedtech.expo'
@@ -9,12 +16,29 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
-  implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
-  implementation 'org.apache.commons:commons-lang3:3.10'
+  implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+  implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+  implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
   
-  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
-  testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
+  testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
   testImplementation 'org.mockito:mockito-core:3.3.3'
+  
+  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
+test {
+  useJUnitPlatform()
+}
+
+publishing {
+  repositories {
+    maven {
+      name = "OSSRH"
+      url = version.toString().endsWith('-SNAPSHOT') ? 'https://s01.oss.sonatype.org/content/repositories' : 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+      credentials {
+        username = System.getenv("MAVEN_USERNAME")
+        password = System.getenv("MAVEN_PASSWORD")
+      }
+    }
+  }
+}

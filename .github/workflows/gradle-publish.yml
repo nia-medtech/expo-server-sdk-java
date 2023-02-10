@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Publish package
-        run: ./gradlew sign publish -Psigning.secretKeyRingFile= -Psigning.password= -Psigning.keyId=
+        run: ./gradlew sign publish
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}

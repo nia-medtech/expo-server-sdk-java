@@ -7,10 +7,11 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish package to the Maven Central Repository
+name: Build and publish release
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -24,7 +25,7 @@ jobs:
       - name: Publish package
         run:
           VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3) 
-          ./gradlew -Pversion=${VERSION}] sign publish
+          ./gradlew -Pversion=${VERSION}] publish
         env:
           ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_nexusPassword: ${{ secrets.NEXUS_PASSWORD }}
@@ -32,3 +33,13 @@ jobs:
           ORG_GRADLE_PROJECT_ossrhPassword: ${{ secrets.OSSRH_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false

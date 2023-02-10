@@ -25,7 +25,7 @@ jobs:
       - name: Publish package
         run:
           VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3) 
-          ./gradlew -Pversion=${VERSION}] publish
+          ./gradlew -Pversion=${VERSION} sign publish
         env:
           ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_nexusPassword: ${{ secrets.NEXUS_PASSWORD }}

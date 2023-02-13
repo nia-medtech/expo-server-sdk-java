@@ -37,15 +37,6 @@ test {
   useJUnitPlatform()
 }
 
-signing {
-  required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
-  def signingKey = findProperty("signingKey")
-  def signingPassword = findProperty("signingPassword")
-  useInMemoryPgpKeys(signingKey, signingPassword)
-  sign publishing.publications.mavenJava
-}
-
-
 publishing {
   repositories {
     maven {
@@ -97,4 +88,12 @@ publishing {
       }
     }
   }
+}
+
+signing {
+  required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+  def signingKey = findProperty("signingKey")
+  def signingPassword = findProperty("signingPassword")
+  useInMemoryPgpKeys(signingKey, signingPassword)
+  sign publishing.publications.mavenJava
 }

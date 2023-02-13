@@ -23,7 +23,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build
-        run:
+        run: |
           echo ${GITHUB_REF}
           VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
           echo ${VERSION} 
@@ -39,7 +39,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Publish package
-        run:
+        run: |
           VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3) 
           echo ${VERSION}
           ./gradlew -Pversion=${VERSION} sign publish

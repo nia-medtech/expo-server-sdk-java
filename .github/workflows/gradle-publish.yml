@@ -24,6 +24,7 @@ jobs:
           distribution: 'temurin'
       - name: Build
         run:
+          echo ${GITHUB_REF}
           VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
           echo ${VERSION} 
           ./gradlew -Pversion=${VERSION} build check

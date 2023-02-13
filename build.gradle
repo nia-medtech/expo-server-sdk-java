@@ -33,10 +33,6 @@ java {
   withSourcesJar()
 }
 
-artifacts {
-  archives javadocJar,sourcesJar
-}
-
 test {
   useJUnitPlatform()
 }
@@ -46,7 +42,7 @@ signing {
   def signingKey = findProperty("signingKey")
   def signingPassword = findProperty("signingPassword")
   useInMemoryPgpKeys(signingKey, signingPassword)
-  sign publishing.publications
+  sign publishing.publications.mavenJava
 }
 
 
@@ -73,6 +69,8 @@ publishing {
   
   publications {
     mavenJava(MavenPublication) {
+      from components.java
+      
       pom {
         name = 'expo-server-sdk'
         description = 'Java implementation of expo-server-sdk implementation.Classes and methods to manage push notifications'

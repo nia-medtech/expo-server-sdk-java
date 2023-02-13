@@ -24,9 +24,7 @@ jobs:
           distribution: 'temurin'
       - name: Build
         run: |
-          echo ${GITHUB_REF}
-          VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          echo ${VERSION} 
+          VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3) 
           ./gradlew -Pversion=${VERSION} build check
       - name: Create Release
         id: create_release
@@ -41,7 +39,6 @@ jobs:
       - name: Publish package
         run: |
           VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3) 
-          echo ${VERSION}
           ./gradlew -Pversion=${VERSION} sign publish
         env:
           ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}

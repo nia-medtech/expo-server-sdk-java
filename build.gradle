@@ -11,7 +11,7 @@ ext {
   junitVersion = '5.8.2'
 }
 
-group = 'com.niamedtech.oss'
+group = 'com.nia_medtech.oss'
 
 repositories {
   mavenCentral()

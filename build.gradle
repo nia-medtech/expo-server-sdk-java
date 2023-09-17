@@ -1,6 +1,10 @@
 plugins {
+  id 'com.diffplug.spotless' version '6.19.0'
+  id 'jacoco'
   id 'java-library'
   id 'maven-publish'
+  id 'net.researchgate.release' version '3.0.2'
+  id 'org.unbroken-dome.test-sets' version '4.0.0'
   id 'signing'
 }
 
@@ -8,7 +12,7 @@ ext {
   commonsLangVersion = '3.12.0'
   isReleaseVersion = !version.endsWith("SNAPSHOT")
   jacksonVersion = '2.13.4'
-  junitVersion = '5.8.2'
+  junitVersion = '5.10.0'
 }
 
 group = 'com.nia-medtech.oss'

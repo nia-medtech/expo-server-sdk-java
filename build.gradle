@@ -1,14 +1,26 @@
 plugins {
+  id 'com.diffplug.spotless' version '6.19.0'
+  id 'io.freefair.lombok' version '8.3'
+  id 'jacoco'
   id 'java-library'
   id 'maven-publish'
+  id 'net.researchgate.release' version '3.0.2'
+  id 'org.unbroken-dome.test-sets' version '4.0.0'
   id 'signing'
 }
 
 ext {
   commonsLangVersion = '3.12.0'
+  hamcrestVersion = '2.2'
+  hc5AsyncJsonVersion = '0.3.0'
+  httpClientVersion = '5.1.4'
   isReleaseVersion = !version.endsWith("SNAPSHOT")
   jacksonVersion = '2.13.4'
-  junitVersion = '5.8.2'
+  junitVersion = '5.10.0'
+  logbackVersion = '1.2.12'
+  mockitoVersion = '5.5.0'
+  mockServerVersion = '5.15.0'
+  slf4jVersion = '1.7.36'
 }
 
 group = 'com.nia-medtech.oss'
@@ -17,15 +29,35 @@ repositories {
   mavenCentral()
 }
 
+testSets {
+  integrationTest {
+    extendsFrom unitTest
+  }
+}
+
 dependencies {
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
   implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
   implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+  implementation "org.apache.httpcomponents.client5:httpclient5:${httpClientVersion}"
+  implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+  implementation "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
   
+  integrationTestImplementation "org.mock-server:mockserver-junit-jupiter:${mockServerVersion}"
+
+  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
   testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-  testImplementation 'org.mockito:mockito-core:3.3.3'
+  testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+  testImplementation "org.mockito:mockito-core:${mockitoVersion}"
   
+  testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+javadoc {
+  options {
+    addStringOption('Xdoclint:none', '-quiet')
+  }
 }
 
 java {
@@ -35,6 +67,25 @@ java {
 
 test {
   useJUnitPlatform()
+}
+
+spotless {
+  format 'misc', {
+    target '*.md', '.gitignore', '*.adoc'
+    trimTrailingWhitespace()
+    indentWithSpaces(2)
+    endWithNewline()
+  }
+        
+  groovyGradle {
+    target '*.gradle'
+  }
+
+  java {
+    googleJavaFormat()
+    formatAnnotations()
+  }
+
 }
 
 publishing {

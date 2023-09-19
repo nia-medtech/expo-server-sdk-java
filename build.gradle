@@ -36,8 +36,6 @@ testSets {
 }
 
 dependencies {
-  implementation "com.github.ok2c.hc5:hc5-async-json:${hc5AsyncJsonVersion}"
-
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
   implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
   implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
@@ -45,8 +43,6 @@ dependencies {
   implementation "org.slf4j:slf4j-api:${slf4jVersion}"
   implementation "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
   
-  runtimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
-
   integrationTestImplementation "org.mock-server:mockserver-junit-jupiter:${mockServerVersion}"
 
   testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
@@ -54,7 +50,14 @@ dependencies {
   testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
   testImplementation "org.mockito:mockito-core:${mockitoVersion}"
   
+  testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+javadoc {
+  options {
+    addStringOption('Xdoclint:none', '-quiet')
+  }
 }
 
 java {

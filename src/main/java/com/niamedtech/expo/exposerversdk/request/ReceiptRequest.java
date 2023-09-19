@@ -1,7 +1,6 @@
 package com.niamedtech.expo.exposerversdk.request;
 
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -10,6 +9,5 @@ import lombok.NonNull;
 @AllArgsConstructor
 public final class ReceiptRequest {
 
-  @NonNull
-  private final List<String> ids;
+  @NonNull private final List<String> ids;
 }

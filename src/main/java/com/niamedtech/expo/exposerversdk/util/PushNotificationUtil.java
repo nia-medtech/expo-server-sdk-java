@@ -1,6 +1,6 @@
 package com.niamedtech.expo.exposerversdk.util;
 
-import com.niamedtech.expo.exposerversdk.request.ExpoPushNotification;
+import com.niamedtech.expo.exposerversdk.request.PushNotification;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,13 +57,13 @@ public final class PushNotificationUtil {
     return chunks;
   }
 
-  public static List<List<ExpoPushNotification>> chunkPushNotifications(
-      List<ExpoPushNotification> messages) {
-    List<List<ExpoPushNotification>> chunks = new ArrayList<>();
-    List<ExpoPushNotification> chunk = new ArrayList<>();
+  public static List<List<PushNotification>> chunkPushNotifications(
+      List<PushNotification> messages) {
+    List<List<PushNotification>> chunks = new ArrayList<>();
+    List<PushNotification> chunk = new ArrayList<>();
 
     long chunkMessagesCount = 0;
-    for (ExpoPushNotification message : messages) {
+    for (PushNotification message : messages) {
       List<String> partialTo = new ArrayList<>();
       for (String recipient : message.getTo()) {
         if (recipient.length() <= 0) continue;
@@ -76,7 +76,7 @@ public final class PushNotificationUtil {
           // Because we're using generics, we can't use the constructor. Instead, clone()
           // the
           // message
-          ExpoPushNotification tmpCopy = new ExpoPushNotification(message);
+          PushNotification tmpCopy = new PushNotification(message);
           tmpCopy.setTo(partialTo);
           chunk.add(tmpCopy);
           chunks.add(chunk);
@@ -87,7 +87,7 @@ public final class PushNotificationUtil {
       }
 
       if (!partialTo.isEmpty()) {
-        ExpoPushNotification tmpCopy = new ExpoPushNotification(message);
+        PushNotification tmpCopy = new PushNotification(message);
         tmpCopy.setTo(partialTo);
         chunk.add(tmpCopy);
       }

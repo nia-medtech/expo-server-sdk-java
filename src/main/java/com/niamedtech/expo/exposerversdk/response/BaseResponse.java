@@ -1,24 +1,21 @@
 package com.niamedtech.expo.exposerversdk.response;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.databind.JsonNode;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/** Base class for responses provied by Expo Push Notification Service. */
 @Data
 public abstract class BaseResponse<T> {
 
   protected static class GenericData {
 
-    /**
-     * Store unmapped data in case actual response is varying from specification.
-     */
+    /** Store unmapped data in case actual response is varying from specification. */
     private Map<String, JsonNode> any;
 
     @JsonAnyGetter
@@ -33,7 +30,6 @@ public abstract class BaseResponse<T> {
       }
       any.put(key, value);
     }
-
   }
 
   @Data

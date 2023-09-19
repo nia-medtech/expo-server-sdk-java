@@ -2,12 +2,11 @@ package com.niamedtech.expo.exposerversdk.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-
 import java.util.Map;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/** Reponse including receipts for tickets. */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public final class ReceiptResponse extends BaseResponse<Map<String, ReceiptResponse.Receipt>> {

@@ -1,16 +1,15 @@
 package com.niamedtech.expo.exposerversdk.response;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/** Response inlcuding tickets for push notifications. */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public final class SendResponse extends BaseResponse<List<SendResponse.Ticket>> {
+public final class TicketResponse extends BaseResponse<List<TicketResponse.Ticket>> {
 
   @Data
   @EqualsAndHashCode(callSuper = false)
@@ -36,5 +35,5 @@ public final class SendResponse extends BaseResponse<List<SendResponse.Ticket>> 
     private Details details;
   }
 
-  private List<SendResponse.Ticket> data;
+  private List<TicketResponse.Ticket> data;
 }

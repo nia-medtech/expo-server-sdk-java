@@ -1,15 +1,13 @@
 package com.niamedtech.expo.exposerversdk.request;
 
-import java.util.*;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import java.util.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public final class ExpoPushNotification {
+public final class PushNotification {
 
   public enum Priority {
     @JsonProperty("default")
@@ -55,7 +53,7 @@ public final class ExpoPushNotification {
 
   private String channelId;
 
-  public ExpoPushNotification(ExpoPushNotification other) {
+  public PushNotification(PushNotification other) {
     this.to = other.to;
     this.title = other.title;
     this.subtitle = other.subtitle;

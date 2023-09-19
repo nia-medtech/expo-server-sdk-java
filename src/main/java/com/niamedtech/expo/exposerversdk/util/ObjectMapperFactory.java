@@ -1,6 +1,7 @@
 package com.niamedtech.expo.exposerversdk.util;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class ObjectMapperFactory {
@@ -20,5 +21,4 @@ public final class ObjectMapperFactory {
   public static ObjectMapper getInstance() {
     return OBJECT_MAPPER;
   }
-
 }

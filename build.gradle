@@ -142,6 +142,12 @@ publishing {
   }
 }
 
+release {
+  git {
+    requireBranch.set('main|[0-9]+\\.[0-9]+\\.x')
+  }
+}
+
 signing {
   required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
   def signingKey = findProperty("signingKey")

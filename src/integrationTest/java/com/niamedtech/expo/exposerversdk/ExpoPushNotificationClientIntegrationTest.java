@@ -3,7 +3,7 @@ package com.niamedtech.expo.exposerversdk;
 import com.niamedtech.expo.exposerversdk.request.PushNotification;
 import com.niamedtech.expo.exposerversdk.response.ReceiptResponse;
 import com.niamedtech.expo.exposerversdk.response.TicketResponse;
-import com.niamedtech.expo.test.ResponseTestFixture;
+import com.niamedtech.expo.integrationtest.ResponseTestFixture;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;

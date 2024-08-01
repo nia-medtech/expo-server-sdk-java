@@ -5,7 +5,7 @@ plugins {
   id 'java-library'
   id 'maven-publish'
   id 'net.researchgate.release' version '3.0.2'
-  id 'org.unbroken-dome.test-sets' version '4.1.0'
+  id 'jvm-test-suite'
   id 'signing'
 }
 
@@ -15,24 +15,18 @@ ext {
   hc5AsyncJsonVersion = '0.3.0'
   httpClientVersion = '5.1.4'
   isReleaseVersion = !version.endsWith("SNAPSHOT")
-  jacksonVersion = '2.13.4'
-  junitVersion = '5.10.0'
-  logbackVersion = '1.2.12'
-  mockitoVersion = '5.5.0'
+  jacksonVersion = '2.17.2'
+  junitVersion = '5.10.3'
+  logbackVersion = '1.5.6'
+  mockitoVersion = '5.12.0'
   mockServerVersion = '5.15.0'
-  slf4jVersion = '1.7.36'
+  slf4jVersion = '2.0.13'
 }
 
 group = 'com.nia-medtech.oss'
 
 repositories {
   mavenCentral()
-}
-
-testSets {
-  integrationTest {
-    extendsFrom unitTest
-  }
 }
 
 dependencies {
@@ -43,16 +37,6 @@ dependencies {
   implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
   implementation "org.slf4j:slf4j-api:${slf4jVersion}"
   implementation "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
-  
-  integrationTestImplementation "org.mock-server:mockserver-junit-jupiter:${mockServerVersion}"
-
-  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
-  testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-  testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
-  testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-  
-  testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
-  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
 javadoc {
@@ -66,8 +50,43 @@ java {
   withSourcesJar()
 }
 
-test {
-  useJUnitPlatform()
+testing {
+  suites { 
+    test { 
+      useJUnitJupiter()
+      dependencies {
+        implementation "org.hamcrest:hamcrest:${hamcrestVersion}"
+
+        implementation(platform("org.junit:junit-bom:${junitVersion}"))
+        implementation('org.junit.jupiter:junit-jupiter')
+        implementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+        implementation "org.mockito:mockito-core:${mockitoVersion}"
+  
+        runtimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+        runtimeOnly('org.junit.platform:junit-platform-launcher')
+      } 
+    }
+
+    integrationTest(JvmTestSuite) { 
+      useJUnitJupiter()
+      dependencies {
+        implementation project()
+        implementation "org.mock-server:mockserver-junit-jupiter:${mockServerVersion}"
+      }
+
+      targets { 
+        all {
+          testTask.configure {
+            shouldRunAfter(test)
+          }
+        }
+      }
+    }
+  }
+}
+
+tasks.named('check') { 
+  dependsOn(testing.suites.integrationTest)
 }
 
 spotless {

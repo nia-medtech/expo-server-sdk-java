@@ -1,6 +1,6 @@
 plugins {
   id 'com.diffplug.spotless' version '6.19.0'
-  id 'io.freefair.lombok' version '8.3'
+  id 'io.freefair.lombok' version '8.6'
   id 'jacoco'
   id 'java-library'
   id 'maven-publish'
@@ -15,12 +15,12 @@ ext {
   hc5AsyncJsonVersion = '0.3.0'
   httpClientVersion = '5.1.4'
   isReleaseVersion = !version.endsWith("SNAPSHOT")
-  jacksonVersion = '2.13.4'
-  junitVersion = '5.10.0'
-  logbackVersion = '1.2.12'
-  mockitoVersion = '5.5.0'
+  jacksonVersion = '2.17.2'
+  junitVersion = '5.10.3'
+  logbackVersion = '1.5.6'
+  mockitoVersion = '5.12.0'
   mockServerVersion = '5.15.0'
-  slf4jVersion = '1.7.36'
+  slf4jVersion = '2.0.13'
 }
 
 group = 'com.nia-medtech.oss'
@@ -47,12 +47,14 @@ dependencies {
   integrationTestImplementation "org.mock-server:mockserver-junit-jupiter:${mockServerVersion}"
 
   testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
-  testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+
+	testImplementation(platform("org.junit:junit-bom:${junitVersion}"))
+	testImplementation('org.junit.jupiter:junit-jupiter')
   testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
   testImplementation "org.mockito:mockito-core:${mockitoVersion}"
   
   testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
-  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+  	testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }
 
 javadoc {

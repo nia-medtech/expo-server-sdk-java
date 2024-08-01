@@ -67,4 +67,19 @@ final class BaseResponseHandlerTest {
         assertThrows(HttpException.class, () -> testee.handleResponse(httpResponse));
     assertThat(exception.getCause(), instanceOf(ErrorResponseException.class));
   }
+
+  @Test
+  void testErrorFcm() throws Exception {
+
+    when(httpResponse.getCode()).thenReturn(400);
+    when(httpEntity.getContent())
+        .thenReturn(new ByteArrayInputStream(PUSH_SEND_FCM_KEY_UNRETRIEVABLE.getBytes()));
+    when(httpResponse.getEntity()).thenReturn(httpEntity);
+
+    final BaseResponseHandler<List<TicketResponse.Ticket>> testee =
+        new BaseResponseHandler<>(TicketResponse.class);
+    final HttpException exception =
+        assertThrows(HttpException.class, () -> testee.handleResponse(httpResponse));
+    assertThat(exception.getCause(), instanceOf(ErrorResponseException.class));
+  }
 }

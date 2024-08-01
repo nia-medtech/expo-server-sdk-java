@@ -57,8 +57,8 @@ testing {
       dependencies {
         implementation "org.hamcrest:hamcrest:${hamcrestVersion}"
 
-	      implementation(platform("org.junit:junit-bom:${junitVersion}"))
-	      implementation('org.junit.jupiter:junit-jupiter')
+        implementation(platform("org.junit:junit-bom:${junitVersion}"))
+        implementation('org.junit.jupiter:junit-jupiter')
         implementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
         implementation "org.mockito:mockito-core:${mockitoVersion}"
   

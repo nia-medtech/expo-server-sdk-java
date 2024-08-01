@@ -27,6 +27,7 @@ public final class TicketResponse extends BaseResponse<List<TicketResponse.Ticke
       private Error error;
       private Integer sentAt;
       private JsonNode additionalProperties;
+      private String fault;
     }
 
     private String id;

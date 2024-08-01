@@ -5,7 +5,7 @@ plugins {
   id 'java-library'
   id 'maven-publish'
   id 'net.researchgate.release' version '3.0.2'
-  id 'org.unbroken-dome.test-sets' version '4.1.0'
+  id 'jvm-test-suite'
   id 'signing'
 }
 
@@ -29,12 +29,6 @@ repositories {
   mavenCentral()
 }
 
-testSets {
-  integrationTest {
-    extendsFrom unitTest
-  }
-}
-
 dependencies {
   api "org.apache.httpcomponents.client5:httpclient5:${httpClientVersion}"
   
@@ -43,18 +37,6 @@ dependencies {
   implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
   implementation "org.slf4j:slf4j-api:${slf4jVersion}"
   implementation "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
-  
-  integrationTestImplementation "org.mock-server:mockserver-junit-jupiter:${mockServerVersion}"
-
-  testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
-
-	testImplementation(platform("org.junit:junit-bom:${junitVersion}"))
-	testImplementation('org.junit.jupiter:junit-jupiter')
-  testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
-  testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-  
-  testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
-  	testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }
 
 javadoc {
@@ -68,8 +50,43 @@ java {
   withSourcesJar()
 }
 
-test {
-  useJUnitPlatform()
+testing {
+  suites { 
+    test { 
+      useJUnitJupiter()
+      dependencies {
+        implementation "org.hamcrest:hamcrest:${hamcrestVersion}"
+
+	      implementation(platform("org.junit:junit-bom:${junitVersion}"))
+	      implementation('org.junit.jupiter:junit-jupiter')
+        implementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+        implementation "org.mockito:mockito-core:${mockitoVersion}"
+  
+        runtimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+        runtimeOnly('org.junit.platform:junit-platform-launcher')
+      } 
+    }
+
+    integrationTest(JvmTestSuite) { 
+      useJUnitJupiter()
+      dependencies {
+        implementation project()
+        implementation "org.mock-server:mockserver-junit-jupiter:${mockServerVersion}"
+      }
+
+      targets { 
+        all {
+          testTask.configure {
+            shouldRunAfter(test)
+          }
+        }
+      }
+    }
+  }
+}
+
+tasks.named('check') { 
+  dependsOn(testing.suites.integrationTest)
 }
 
 spotless {

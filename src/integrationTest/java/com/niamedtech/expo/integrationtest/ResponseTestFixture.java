@@ -1,4 +1,4 @@
-package com.niamedtech.expo.test;
+package com.niamedtech.expo.integrationtest;
 
 public final class ResponseTestFixture {
 
@@ -78,20 +78,4 @@ public final class ResponseTestFixture {
                 ]
             }
             """;
-
-  public static final String PUSH_SEND_FCM_KEY_UNRETRIEVABLE =
-      """
-        {
-          "data":[
-            {
-              "status":"error",
-              "message":"Unable to retrieve the FCM server key for the recipient's app. Make sure you have provided a server key as directed by the Expo FCM documentation.",
-              "details": {
-                "error":"InvalidCredentials",
-                "fault":"developer"
-              }
-            }
-          ]
-        }
-    """;
 }

@@ -19,4 +19,4 @@ TBD
   * https://github.com/expo/expo-server-sdk-node
   * https://github.com/expo/expo-server-sdk-ruby
   * https://github.com/expo/expo-server-sdk-python
-  * https://github.com/expo/expo-server-sdk-rust
+  * https://github.com/katayama8000/expo-push-notification-client-rust

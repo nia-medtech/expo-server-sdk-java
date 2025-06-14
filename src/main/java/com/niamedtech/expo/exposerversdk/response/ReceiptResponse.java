@@ -32,7 +32,10 @@ public final class ReceiptResponse extends BaseResponse<Map<String, ReceiptRespo
         INVALID_CREDENTIALS,
 
         @JsonProperty("InvalidProviderToken")
-        INVALID_PROVIDERTOKEN;
+        INVALID_PROVIDERTOKEN,
+
+        @JsonProperty("ProviderError")
+        PROVIDER_ERROR
       }
 
       private Error error;
